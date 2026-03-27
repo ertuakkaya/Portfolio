@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.androidApplication)
 }
 
 kotlin {
@@ -19,7 +20,15 @@ kotlin {
         browser()
         binaries.executable()
     }
-    
+
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "11"
+            }
+        }
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(libs.compose.runtime)
