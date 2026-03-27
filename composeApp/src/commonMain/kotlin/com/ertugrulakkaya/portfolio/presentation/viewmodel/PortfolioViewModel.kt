@@ -7,6 +7,7 @@ import com.ertugrulakkaya.portfolio.domain.repository.PortfolioRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class PortfolioUiState(
@@ -28,13 +29,13 @@ class PortfolioViewModel(
 
     fun loadPortfolioData() {
         viewModelScope.launch {
-            _uiState.value = PortfolioUiState(isLoading = true)
+            _uiState.update { it.copy(isLoading = true) }
             repository.getPortfolioData()
                 .onSuccess { data ->
-                    _uiState.value = PortfolioUiState(isLoading = false, data = data)
+                    _uiState.update { it.copy(isLoading = false, data = data, error = null) }
                 }
                 .onFailure { error ->
-                    _uiState.value = PortfolioUiState(isLoading = false, error = error.message)
+                    _uiState.update { it.copy(isLoading = false, error = error.message) }
                 }
         }
     }
