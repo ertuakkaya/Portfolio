@@ -3,17 +3,11 @@ package com.ertugrulakkaya.portfolio.presentation.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Email
-import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -65,22 +59,11 @@ fun ProfileHeader(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.LocationOn,
-                contentDescription = null,
-                modifier = Modifier.size(16.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(
-                text = profile.location,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        Text(
+            text = profile.location,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -118,21 +101,18 @@ private fun SocialLinkButton(
     link: SocialLink,
     modifier: Modifier = Modifier
 ) {
-    val icon = when (link.type) {
-        SocialLinkType.EMAIL -> Icons.AutoMirrored.Filled.Email
-        SocialLinkType.GITHUB -> Icons.AutoMirrored.Filled.Send
-        SocialLinkType.LINKEDIN -> Icons.AutoMirrored.Filled.Send
-        SocialLinkType.WEBSITE -> Icons.Default.Language
-        SocialLinkType.TWITTER -> Icons.AutoMirrored.Filled.Send
+    val label = when (link.type) {
+        SocialLinkType.EMAIL -> "Email"
+        SocialLinkType.GITHUB -> "GitHub"
+        SocialLinkType.LINKEDIN -> "LinkedIn"
+        SocialLinkType.WEBSITE -> "Web"
+        SocialLinkType.TWITTER -> "Twitter"
     }
 
-    FilledTonalIconButton(
-        onClick = { /* Open URL */ },
-        modifier = modifier.size(48.dp)
+    FilledTonalButton(
+        onClick = { },
+        modifier = modifier
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = link.type.name
-        )
+        Text(label)
     }
 }

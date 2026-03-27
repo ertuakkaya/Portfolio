@@ -96,13 +96,15 @@ private fun ExperienceCard(
     }
 }
 
-private fun formatDateRange(startDate: String, endDate: String?, isCurrent: Boolean): String {
+@PublishedApi
+internal fun formatDateRange(startDate: String, endDate: String?, isCurrent: Boolean): String {
     val start = formatDate(startDate)
     val end = if (isCurrent) "Present" else endDate?.let { formatDate(it) } ?: ""
     return "$start - $end"
 }
 
-private fun formatDate(date: String): String {
+@PublishedApi
+internal fun formatDate(date: String): String {
     val parts = date.split("-")
     if (parts.size != 2) return date
     val year = parts[0]

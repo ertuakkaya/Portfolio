@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.androidApplication)
 }
 
 kotlin {
@@ -19,14 +18,6 @@ kotlin {
     wasmJs {
         browser()
         binaries.executable()
-    }
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "11"
-            }
-        }
     }
 
     sourceSets {

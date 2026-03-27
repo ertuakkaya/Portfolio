@@ -1,7 +1,6 @@
 package com.ertugrulakkaya.portfolio.data.source
 
 import com.ertugrulakkaya.portfolio.domain.model.PortfolioData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
@@ -11,7 +10,7 @@ class PortfolioJsonSource {
         isLenient = true
     }
 
-    suspend fun loadPortfolioData(): PortfolioData = withContext(Dispatchers.IO) {
+    suspend fun loadPortfolioData(): PortfolioData = withContext(kotlinx.coroutines.Dispatchers.Default) {
         val jsonString = getJsonString()
         json.decodeFromString<PortfolioData>(jsonString)
     }
