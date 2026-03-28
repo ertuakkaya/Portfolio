@@ -87,4 +87,5 @@ private val SkillCategory.displayName: String
         SkillCategory.TOOL -> "Tools"
         SkillCategory.DATABASE -> "Databases"
         SkillCategory.OTHER -> "Other"
+        SkillCategory.ARCHITECTURE -> "Architecture"
     }

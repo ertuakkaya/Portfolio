@@ -12,5 +12,6 @@ data class Education(
     val endDate: String?,
     val isCurrent: Boolean,
     val description: String? = null,
+    val gpa: String? = null,
     val schoolLogo: String? = null
 )

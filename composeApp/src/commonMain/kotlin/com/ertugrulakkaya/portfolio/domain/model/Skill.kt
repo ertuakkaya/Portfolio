@@ -16,5 +16,6 @@ enum class SkillCategory {
     FRAMEWORK,
     TOOL,
     DATABASE,
+    ARCHITECTURE,
     OTHER
 }

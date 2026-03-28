@@ -8,6 +8,7 @@ data class Profile(
     val title: String,
     val bio: String,
     val email: String,
+    val phone: String? = null,
     val location: String,
     val avatarUrl: String? = null,
     val socialLinks: List<SocialLink>

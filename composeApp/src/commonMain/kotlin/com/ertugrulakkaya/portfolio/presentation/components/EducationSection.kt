@@ -65,6 +65,15 @@ private fun EducationCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
+            education.gpa?.let { gpa ->
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "GPA: $gpa",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
             if (education.description != null) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
