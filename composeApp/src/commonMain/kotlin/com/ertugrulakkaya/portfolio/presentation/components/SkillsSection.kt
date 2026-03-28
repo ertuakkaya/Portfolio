@@ -1,8 +1,6 @@
 package com.ertugrulakkaya.portfolio.presentation.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -44,11 +42,11 @@ private fun SkillCategoryRow(
         Text(
             text = category.displayName,
             style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.Medium,
+            fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -66,31 +64,20 @@ private fun SkillChip(
     skill: Skill,
     modifier: Modifier = Modifier
 ) {
-    if (skill.proficiencyLevel != null) {
-        FilterChip(
-            selected = false,
-            onClick = { },
-            label = {
-                Text(
-                    text = "${skill.name} (${skill.proficiencyLevel}%)",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
-            modifier = modifier
-        )
-    } else {
-        FilterChip(
-            selected = false,
-            onClick = { },
-            label = {
-                Text(
-                    text = skill.name,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
-            modifier = modifier
-        )
-    }
+    AssistChip(
+        onClick = { },
+        label = {
+            Text(
+                text = if (skill.proficiencyLevel != null) {
+                    "${skill.name} (${skill.proficiencyLevel}%)"
+                } else {
+                    skill.name
+                },
+                style = MaterialTheme.typography.bodyMedium
+            )
+        },
+        modifier = modifier
+    )
 }
 
 private val SkillCategory.displayName: String

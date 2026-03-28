@@ -27,7 +27,7 @@ class PortfolioJsonSource {
             "socialLinks": [
               {
                 "type": "GITHUB",
-                "url": "https://github.com/ertugrulakkaya",
+                "url": "https://github.com/ertuakkaya",
                 "iconName": "GitHub"
               },
               {

@@ -35,8 +35,9 @@ private fun EducationCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-        )
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -47,6 +48,8 @@ private fun EducationCard(
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface
             )
+
+            Spacer(modifier = Modifier.height(4.dp))
 
             Text(
                 text = "${education.degree} in ${education.field}",

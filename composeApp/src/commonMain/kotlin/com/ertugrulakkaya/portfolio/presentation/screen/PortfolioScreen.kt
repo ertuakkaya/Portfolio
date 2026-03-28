@@ -1,5 +1,6 @@
 package com.ertugrulakkaya.portfolio.presentation.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -19,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+
 import androidx.compose.ui.unit.dp
 import com.ertugrulakkaya.portfolio.domain.model.PortfolioData
 import com.ertugrulakkaya.portfolio.presentation.components.ErrorState
@@ -29,6 +33,7 @@ import com.ertugrulakkaya.portfolio.presentation.components.SkillsSection
 import com.ertugrulakkaya.portfolio.presentation.components.EducationSection
 import com.ertugrulakkaya.portfolio.presentation.components.ExperienceSection
 import com.ertugrulakkaya.portfolio.presentation.viewmodel.PortfolioViewModel
+
 import org.koin.compose.koinInject
 
 @Composable
@@ -40,7 +45,12 @@ fun PortfolioScreen(
     val error = uiState.error
     val data = uiState.data
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+
+    ) {
         if (data != null) {
             PortfolioContent(data = data)
         }
