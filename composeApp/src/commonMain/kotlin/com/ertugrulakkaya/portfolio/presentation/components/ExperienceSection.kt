@@ -41,7 +41,7 @@ private fun TimelineItem(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+            containerColor = MaterialTheme.colorScheme.surface
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
