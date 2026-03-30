@@ -1,8 +1,10 @@
 package com.ertugrulakkaya.portfolio.presentation.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.Code
@@ -24,16 +26,16 @@ fun ProjectsSection(
     Column(modifier = modifier) {
         SectionTitle(title = "Projects")
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
             contentPadding = PaddingValues(horizontal = 4.dp)
         ) {
             items(projects) { project ->
                 ProjectCard(
                     project = project,
-                    modifier = Modifier.width(320.dp)
+                    modifier = Modifier.width(340.dp)
                 )
             }
         }
@@ -50,12 +52,15 @@ private fun ProjectCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
+        shape = RoundedCornerShape(24.dp)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(24.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -64,94 +69,99 @@ private fun ProjectCard(
             ) {
                 Text(
                     text = project.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.weight(1f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (project.isKmpProject) {
                         AssistChip(
                             onClick = { },
-                            label = { Text("KMP", style = MaterialTheme.typography.labelSmall) },
-                            modifier = Modifier.height(24.dp)
+                            label = { Text("KMP", style = MaterialTheme.typography.labelMedium) },
+                            modifier = Modifier.height(28.dp),
+                            shape = RoundedCornerShape(12.dp)
                         )
                     }
                     if (project.isFeatured) {
                         SuggestionChip(
                             onClick = { },
-                            label = { Text("Featured", style = MaterialTheme.typography.labelSmall) },
-                            modifier = Modifier.height(24.dp)
+                            label = { Text("Featured", style = MaterialTheme.typography.labelMedium) },
+                            modifier = Modifier.height(28.dp),
+                            shape = RoundedCornerShape(12.dp)
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = project.description,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 project.technologies.forEach { tech ->
-                    SuggestionChip(
-                        onClick = { },
-                        label = {
-                            Text(
-                                text = tech,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                        },
-                        modifier = Modifier.height(24.dp)
-                    )
+                    Surface(
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text(
+                            text = tech,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
+                        )
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 if (project.demoUrl != null) {
                     FilledTonalButton(
                         onClick = { uriHandler.openUri(project.demoUrl) },
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.OpenInNew,
                             contentDescription = null,
-                            modifier = Modifier.size(14.dp)
+                            modifier = Modifier.size(16.dp)
                         )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text("Demo", style = MaterialTheme.typography.labelMedium)
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text("Demo", style = MaterialTheme.typography.labelLarge)
                     }
                 }
 
                 if (project.sourceUrl != null) {
                     OutlinedButton(
                         onClick = { uriHandler.openUri(project.sourceUrl) },
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Code,
                             contentDescription = null,
-                            modifier = Modifier.size(14.dp)
+                            modifier = Modifier.size(16.dp)
                         )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text("Code", style = MaterialTheme.typography.labelMedium)
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text("Code", style = MaterialTheme.typography.labelLarge)
                     }
                 }
             }

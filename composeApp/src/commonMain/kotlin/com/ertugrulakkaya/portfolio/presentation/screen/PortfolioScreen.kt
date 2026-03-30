@@ -1,6 +1,8 @@
 package com.ertugrulakkaya.portfolio.presentation.screen
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,9 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 
@@ -20,8 +25,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 
 import androidx.compose.ui.unit.dp
 import com.ertugrulakkaya.portfolio.domain.model.PortfolioData
@@ -45,11 +52,35 @@ fun PortfolioScreen(
     val error = uiState.error
     val data = uiState.data
 
+    val isDark = isSystemInDarkTheme()
+    val bgColor = MaterialTheme.colorScheme.background
+    val surfaceVariantColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
+    val primaryContainerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.15f)
+
+    val backgroundBrush = remember(isDark, bgColor, surfaceVariantColor, primaryContainerColor) {
+        if (isDark) {
+            Brush.verticalGradient(
+                colors = listOf(
+                    bgColor,
+                    surfaceVariantColor,
+                    bgColor
+                )
+            )
+        } else {
+            Brush.verticalGradient(
+                colors = listOf(
+                    bgColor,
+                    primaryContainerColor,
+                    bgColor
+                )
+            )
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
-
+            .background(backgroundBrush)
     ) {
         if (data != null) {
             PortfolioContent(data = data)
@@ -89,6 +120,28 @@ fun PortfolioScreen(
 }
 
 @Composable
+private fun SectionCard(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
+        shape = RoundedCornerShape(24.dp)
+    ) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            content()
+        }
+    }
+}
+
+@Composable
 private fun PortfolioContent(
     data: PortfolioData,
     modifier: Modifier = Modifier
@@ -96,29 +149,36 @@ private fun PortfolioContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp)
+            .verticalScroll(rememberScrollState()),
     ) {
         Spacer(modifier = Modifier.height(24.dp))
 
         ProfileHeader(profile = data.profile)
 
-        HorizontalDivider(modifier = Modifier.padding(vertical = 24.dp))
+        Spacer(modifier = Modifier.height(48.dp))
 
-        ProjectsSection(projects = data.projects)
+        SectionCard {
+            ProjectsSection(projects = data.projects)
+        }
 
-        HorizontalDivider(modifier = Modifier.padding(vertical = 24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-        ExperienceSection(experiences = data.experiences)
+        SectionCard {
+            ExperienceSection(experiences = data.experiences)
+        }
 
-        HorizontalDivider(modifier = Modifier.padding(vertical = 24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-        EducationSection(education = data.education)
+        SectionCard {
+            EducationSection(education = data.education)
+        }
 
-        HorizontalDivider(modifier = Modifier.padding(vertical = 24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-        SkillsSection(skills = data.skills)
+        SectionCard {
+            SkillsSection(skills = data.skills)
+        }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(48.dp))
     }
 }

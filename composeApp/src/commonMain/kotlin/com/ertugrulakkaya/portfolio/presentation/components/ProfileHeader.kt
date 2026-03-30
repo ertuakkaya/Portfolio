@@ -1,6 +1,5 @@
 package com.ertugrulakkaya.portfolio.presentation.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
@@ -8,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
@@ -27,7 +27,7 @@ fun ProfileHeader(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 24.dp),
+            .padding(vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ProfileAvatar(
@@ -35,29 +35,30 @@ fun ProfileHeader(
             avatarUrl = profile.avatarUrl
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Text(
             text = profile.name,
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineLarge,
+            fontWeight = FontWeight.ExtraBold,
             color = MaterialTheme.colorScheme.onSurface
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        Text(
-            text = profile.title,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary,
-            textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
+            text = profile.title,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Medium
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
             text = profile.location,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
@@ -66,7 +67,7 @@ fun ProfileHeader(
         profile.phone?.let { phone ->
             Text(
                 text = phone,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(4.dp))
@@ -74,11 +75,11 @@ fun ProfileHeader(
 
         Text(
             text = profile.email,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Text(
             text = profile.bio,
@@ -87,10 +88,10 @@ fun ProfileHeader(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 4,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         SocialLinksRow(socialLinks = profile.socialLinks)
     }
@@ -107,13 +108,16 @@ private fun ProfileAvatar(
             model = avatarUrl,
             contentDescription = "Profile picture of $name",
             modifier = modifier
-                .size(120.dp)
+                .size(140.dp)
+                .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary)
                 .clip(CircleShape),
             contentScale = ContentScale.Crop
         )
     } else {
         Surface(
-            modifier = modifier.size(120.dp),
+            modifier = modifier
+                .size(140.dp)
+                .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary),
             shape = CircleShape,
             color = MaterialTheme.colorScheme.primaryContainer
         ) {
@@ -122,7 +126,7 @@ private fun ProfileAvatar(
             ) {
                 Text(
                     text = name.take(2).uppercase(),
-                    style = MaterialTheme.typography.displaySmall,
+                    style = MaterialTheme.typography.displayMedium,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
@@ -137,7 +141,7 @@ private fun SocialLinksRow(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         socialLinks.forEach { link ->
             SocialLinkButton(link = link)
