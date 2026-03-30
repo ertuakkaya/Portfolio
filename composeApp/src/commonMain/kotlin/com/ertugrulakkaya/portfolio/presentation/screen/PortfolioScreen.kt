@@ -51,7 +51,6 @@ fun PortfolioScreen(
     val isLoading = uiState.isLoading
     val error = uiState.error
     val data = uiState.data
-
     val isDark = isSystemInDarkTheme()
     val bgColor = MaterialTheme.colorScheme.background
     val surfaceVariantColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
@@ -153,7 +152,9 @@ private fun PortfolioContent(
     ) {
         Spacer(modifier = Modifier.height(24.dp))
 
-        ProfileHeader(profile = data.profile)
+        ProfileHeader(
+            profile = data.profile
+        )
 
         Spacer(modifier = Modifier.height(48.dp))
 

@@ -2,6 +2,9 @@ package com.ertugrulakkaya.portfolio.presentation.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,18 +21,30 @@ import coil3.compose.AsyncImage
 import com.ertugrulakkaya.portfolio.domain.model.Profile
 import com.ertugrulakkaya.portfolio.domain.model.SocialLink
 import com.ertugrulakkaya.portfolio.domain.model.SocialLinkType
+import com.ertugrulakkaya.portfolio.presentation.viewmodel.ThemeViewModel
+import org.koin.compose.koinInject
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 @Composable
 fun ProfileHeader(
     profile: Profile,
     modifier: Modifier = Modifier
 ) {
+    val themeViewModel: ThemeViewModel = koinInject()
+    val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
+
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        ThemeToggleButton(
+            isDarkTheme = isDarkTheme,
+            onToggle = { themeViewModel.toggleTheme() },
+            modifier = Modifier.align(Alignment.End).padding(end = 16.dp)
+        )
         ProfileAvatar(
             name = profile.name,
             avatarUrl = profile.avatarUrl
@@ -168,5 +183,23 @@ private fun SocialLinkButton(
         modifier = modifier
     ) {
         Text(label)
+    }
+}
+
+@Composable
+private fun ThemeToggleButton(
+    isDarkTheme: Boolean,
+    onToggle: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onToggle,
+        modifier = modifier
+    ) {
+        Icon(
+            imageVector = if (isDarkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
+            contentDescription = if (isDarkTheme) "Switch to light mode" else "Switch to dark mode",
+            tint = MaterialTheme.colorScheme.primary
+        )
     }
 }

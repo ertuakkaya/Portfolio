@@ -17,7 +17,7 @@ data class PortfolioUiState(
 )
 
 class PortfolioViewModel(
-    private val repository: PortfolioRepository
+    private val portfolioRepository: PortfolioRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PortfolioUiState())
@@ -30,7 +30,7 @@ class PortfolioViewModel(
     fun loadPortfolioData() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            repository.getPortfolioData()
+            portfolioRepository.getPortfolioData()
                 .onSuccess { data ->
                     _uiState.update { it.copy(isLoading = false, data = data, error = null) }
                 }
