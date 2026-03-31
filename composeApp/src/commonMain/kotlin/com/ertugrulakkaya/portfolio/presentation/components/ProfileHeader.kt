@@ -114,21 +114,21 @@ private fun ProfileAvatar(
     avatarUrl: String?,
     modifier: Modifier = Modifier
 ) {
+    val avatarModifier = modifier
+        .size(200.dp)
+        .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary)
+        .clip(CircleShape)
+
     if (avatarUrl != null) {
         AsyncImage(
             model = avatarUrl,
             contentDescription = "Profile picture of $name",
-            modifier = modifier
-                .size(140.dp)
-                .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary)
-                .clip(CircleShape),
+            modifier = avatarModifier,
             contentScale = ContentScale.Crop
         )
     } else {
         Surface(
-            modifier = modifier
-                .size(140.dp)
-                .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary),
+            modifier = avatarModifier,
             shape = CircleShape,
             color = MaterialTheme.colorScheme.primaryContainer
         ) {

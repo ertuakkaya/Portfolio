@@ -36,6 +36,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.coil3.compose)
+            implementation(libs.coil3.network.ktor3)
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.no.arg)
 
