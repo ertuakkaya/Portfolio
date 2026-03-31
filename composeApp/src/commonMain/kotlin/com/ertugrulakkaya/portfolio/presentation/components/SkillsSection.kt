@@ -15,9 +15,9 @@ fun SkillsSection(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        SectionTitle(title = "Skills")
+        SectionTitle(title = "Technical Skills")
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         SkillCategory.entries.forEach { category ->
             val categorySkills = skills.filter { it.category == category }
@@ -46,46 +46,36 @@ private fun SkillCategoryRow(
             color = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            skills.forEach { skill ->
-                SkillChip(skill = skill)
+            skills.forEachIndexed { index, skill ->
+                Text(
+                    text = "•",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = skill.name,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                if (index < skills.lastIndex) {
+                    Spacer(modifier = Modifier.width(4.dp))
+                }
             }
         }
     }
 }
 
-@Composable
-private fun SkillChip(
-    skill: Skill,
-    modifier: Modifier = Modifier
-) {
-    AssistChip(
-        onClick = { },
-        label = {
-            Text(
-                text = if (skill.proficiencyLevel != null) {
-                    "${skill.name} (${skill.proficiencyLevel}%)"
-                } else {
-                    skill.name
-                },
-                style = MaterialTheme.typography.bodyMedium
-            )
-        },
-        modifier = modifier
-    )
-}
-
 private val SkillCategory.displayName: String
     get() = when (this) {
-        SkillCategory.LANGUAGE -> "Languages"
-        SkillCategory.FRAMEWORK -> "Frameworks"
-        SkillCategory.TOOL -> "Tools"
-        SkillCategory.DATABASE -> "Databases"
-        SkillCategory.OTHER -> "Other"
+        SkillCategory.MOBILE_UI -> "Mobile & UI"
         SkillCategory.ARCHITECTURE -> "Architecture"
+        SkillCategory.BACKEND_DB -> "Backend & DBs"
+        SkillCategory.TOOLS_TECH -> "Tools & Tech"
+        SkillCategory.PRACTICES -> "Practices"
     }

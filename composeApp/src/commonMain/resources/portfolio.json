@@ -97,21 +97,42 @@
     }
   ],
   "skills": [
-    { "id": "1", "name": "Kotlin", "category": "LANGUAGE", "proficiencyLevel": 95 },
-    { "id": "2", "name": "ASP.NET Core", "category": "LANGUAGE", "proficiencyLevel": 80 },
-    { "id": "3", "name": "Jetpack Compose", "category": "FRAMEWORK", "proficiencyLevel": 95 },
-    { "id": "4", "name": "Kotlin Multiplatform (KMP)", "category": "FRAMEWORK", "proficiencyLevel": 90 },
-    { "id": "5", "name": "Compose Multiplatform", "category": "FRAMEWORK", "proficiencyLevel": 90 },
-    { "id": "6", "name": "Android SDK", "category": "FRAMEWORK", "proficiencyLevel": 95 },
-    { "id": "7", "name": "Clean Architecture", "category": "ARCHITECTURE", "proficiencyLevel": 90 },
-    { "id": "8", "name": "MVVM", "category": "ARCHITECTURE", "proficiencyLevel": 95 },
-    { "id": "9", "name": "Room", "category": "DATABASE", "proficiencyLevel": 90 },
-    { "id": "10", "name": "PostgreSQL", "category": "DATABASE", "proficiencyLevel": 80 },
-    { "id": "11", "name": "EF Core", "category": "DATABASE", "proficiencyLevel": 80 },
-    { "id": "12", "name": "Git", "category": "TOOL", "proficiencyLevel": 90 },
-    { "id": "13", "name": "Firebase", "category": "TOOL", "proficiencyLevel": 75 },
-    { "id": "14", "name": "MQTT", "category": "TOOL", "proficiencyLevel": 80 },
-    { "id": "15", "name": "Hilt", "category": "TOOL", "proficiencyLevel": 85 },
-    { "id": "16", "name": "Coroutines", "category": "TOOL", "proficiencyLevel": 90 }
+    { "id": "1", "name": "Kotlin", "category": "MOBILE_UI", "proficiencyLevel": 95 },
+    { "id": "2", "name": "Jetpack Compose", "category": "MOBILE_UI", "proficiencyLevel": 95 },
+    { "id": "3", "name": "Kotlin Multiplatform (KMP)", "category": "MOBILE_UI", "proficiencyLevel": 90 },
+    { "id": "4", "name": "Compose Multiplatform", "category": "MOBILE_UI", "proficiencyLevel": 90 },
+    { "id": "5", "name": "Android SDK", "category": "MOBILE_UI", "proficiencyLevel": 95 },
+    { "id": "6", "name": "Coroutines", "category": "MOBILE_UI", "proficiencyLevel": 90 },
+    { "id": "7", "name": "Room", "category": "MOBILE_UI", "proficiencyLevel": 90 },
+    { "id": "8", "name": "Clean Architecture", "category": "ARCHITECTURE", "proficiencyLevel": 90 },
+    { "id": "9", "name": "MVVM", "category": "ARCHITECTURE", "proficiencyLevel": 95 },
+    { "id": "10", "name": "Single-Codebase (White-labeling)", "category": "ARCHITECTURE", "proficiencyLevel": 85 },
+    { "id": "11", "name": "ASP.NET Core", "category": "BACKEND_DB", "proficiencyLevel": 80 },
+    { "id": "12", "name": "RESTful APIs", "category": "BACKEND_DB", "proficiencyLevel": 85 },
+    { "id": "13", "name": "EF Core", "category": "BACKEND_DB", "proficiencyLevel": 80 },
+    { "id": "14", "name": "PostgreSQL", "category": "BACKEND_DB", "proficiencyLevel": 80 },
+    { "id": "15", "name": "SQLite", "category": "BACKEND_DB", "proficiencyLevel": 85 },
+    { "id": "16", "name": "Git", "category": "TOOLS_TECH", "proficiencyLevel": 90 },
+    { "id": "17", "name": "Android Studio", "category": "TOOLS_TECH", "proficiencyLevel": 90 },
+    { "id": "18", "name": "Firebase", "category": "TOOLS_TECH", "proficiencyLevel": 75 },
+    { "id": "19", "name": "MQTT (IoT)", "category": "TOOLS_TECH", "proficiencyLevel": 80 },
+    { "id": "20", "name": "Geolocation", "category": "TOOLS_TECH", "proficiencyLevel": 85 },
+    { "id": "21", "name": "Agile/Scrum (1-Week Sprints)", "category": "PRACTICES", "proficiencyLevel": 85 },
+    { "id": "22", "name": "PR & Code Review", "category": "PRACTICES", "proficiencyLevel": 85 }
+  ],
+  "leadership": [
+    {
+      "id": "1",
+      "organization": "Google Developer Student Clubs, Düzce University",
+      "role": "Core Team Member & Hackathon Coordinator",
+      "startDate": "2023-09",
+      "endDate": "2024-07",
+      "description": "Led development teams for 2 mobile apps and 1 game project. Organized technical events and mentored junior developers.",
+      "achievements": [
+        "Led teams for 2 apps & 1 game; achieved 4th place in hackathon",
+        "Mentored 20+ members and organized 5+ events to boost engagement",
+        "Certified Core Member of GDSC Düzce University"
+      ]
+    }
   ]
 }

@@ -12,10 +12,9 @@ data class Skill(
 
 @Serializable
 enum class SkillCategory {
-    LANGUAGE,
-    FRAMEWORK,
-    TOOL,
-    DATABASE,
+    MOBILE_UI,
     ARCHITECTURE,
-    OTHER
+    BACKEND_DB,
+    TOOLS_TECH,
+    PRACTICES
 }

@@ -39,6 +39,7 @@ import com.ertugrulakkaya.portfolio.presentation.components.ProjectsSection
 import com.ertugrulakkaya.portfolio.presentation.components.SkillsSection
 import com.ertugrulakkaya.portfolio.presentation.components.EducationSection
 import com.ertugrulakkaya.portfolio.presentation.components.ExperienceSection
+import com.ertugrulakkaya.portfolio.presentation.components.LeadershipSection
 import com.ertugrulakkaya.portfolio.presentation.viewmodel.PortfolioViewModel
 
 import org.koin.compose.koinInject
@@ -172,6 +173,12 @@ private fun PortfolioContent(
 
         SectionCard {
             EducationSection(education = data.education)
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        SectionCard {
+            LeadershipSection(leadership = data.leadership)
         }
 
         Spacer(modifier = Modifier.height(24.dp))

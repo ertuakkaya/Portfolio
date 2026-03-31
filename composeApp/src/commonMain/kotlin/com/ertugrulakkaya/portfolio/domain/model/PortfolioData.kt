@@ -8,5 +8,6 @@ data class PortfolioData(
     val experiences: List<Experience>,
     val education: List<Education>,
     val projects: List<Project>,
-    val skills: List<Skill>
+    val skills: List<Skill>,
+    val leadership: List<Leadership> = emptyList()
 )
