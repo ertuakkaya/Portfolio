@@ -34,81 +34,77 @@ fun ProfileHeader(
     val themeViewModel: ThemeViewModel = koinInject()
     val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
 
-    Column(
+    Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(horizontal = 32.dp, vertical = 32.dp),
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        ThemeToggleButton(
-            isDarkTheme = isDarkTheme,
-            onToggle = { themeViewModel.toggleTheme() },
-            modifier = Modifier.align(Alignment.End).padding(end = 16.dp)
-        )
         ProfileAvatar(
             name = profile.name,
             avatarUrl = profile.avatarUrl
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text(
-            text = profile.name,
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.ExtraBold,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = profile.title,
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Medium
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = profile.location,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        profile.phone?.let { phone ->
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Text(
-                text = phone,
+                text = profile.name,
+                style = MaterialTheme.typography.headlineLarge,
+                fontWeight = FontWeight.ExtraBold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Text(
+                text = profile.title,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Medium
+            )
+
+            Text(
+                text = profile.location,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            Spacer(modifier = Modifier.height(4.dp))
+
+            profile.phone?.let { phone ->
+                Text(
+                    text = phone,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            Text(
+                text = profile.email,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = profile.bio,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 4,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            SocialLinksRow(socialLinks = profile.socialLinks)
         }
 
-        Text(
-            text = profile.email,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.primary
+        ThemeToggleButton(
+            isDarkTheme = isDarkTheme,
+            onToggle = { themeViewModel.toggleTheme() },
+            modifier = Modifier.padding(top = 8.dp)
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text(
-            text = profile.bio,
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            maxLines = 4,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        SocialLinksRow(socialLinks = profile.socialLinks)
     }
 }
 
@@ -118,21 +114,21 @@ private fun ProfileAvatar(
     avatarUrl: String?,
     modifier: Modifier = Modifier
 ) {
+    val avatarModifier = modifier
+        .size(200.dp)
+        .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary)
+        .clip(CircleShape)
+
     if (avatarUrl != null) {
         AsyncImage(
             model = avatarUrl,
             contentDescription = "Profile picture of $name",
-            modifier = modifier
-                .size(140.dp)
-                .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary)
-                .clip(CircleShape),
+            modifier = avatarModifier,
             contentScale = ContentScale.Crop
         )
     } else {
         Surface(
-            modifier = modifier
-                .size(140.dp)
-                .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary),
+            modifier = avatarModifier,
             shape = CircleShape,
             color = MaterialTheme.colorScheme.primaryContainer
         ) {

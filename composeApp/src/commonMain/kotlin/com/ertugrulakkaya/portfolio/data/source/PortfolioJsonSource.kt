@@ -25,6 +25,7 @@ class PortfolioJsonSource {
             "email": "ertuakkaya@gmail.com",
             "phone": "+90 554 742 45 93",
             "location": "Ankara, Turkey",
+            "avatarUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGfkJ8P7zaDPA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706806864795?e=1776297600&v=beta&t=XI43lUJe-Bn5u_oQfeNCEdsYhQuVs1cw4aFTCicjFe4",
             "socialLinks": [
               {
                 "type": "GITHUB",
