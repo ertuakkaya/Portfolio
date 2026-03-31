@@ -36,6 +36,11 @@ class PortfolioJsonSource {
                 "type": "LINKEDIN",
                 "url": "https://linkedin.com/in/ertuakkaya",
                 "iconName": "LinkedIn"
+              },
+              {
+                "type": "EMAIL",
+                "url": "mailto:ertuakkaya@gmail.com",
+                "iconName": "Email"
               }
             ]
           },

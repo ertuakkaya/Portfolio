@@ -22,9 +22,14 @@ import com.ertugrulakkaya.portfolio.domain.model.Profile
 import com.ertugrulakkaya.portfolio.domain.model.SocialLink
 import com.ertugrulakkaya.portfolio.domain.model.SocialLinkType
 import com.ertugrulakkaya.portfolio.presentation.viewmodel.ThemeViewModel
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.email
+import portfolio.composeapp.generated.resources.github
+import portfolio.composeapp.generated.resources.linkedin
 
 @Composable
 fun ProfileHeader(
@@ -165,21 +170,20 @@ private fun SocialLinkButton(
     link: SocialLink,
     modifier: Modifier = Modifier
 ) {
-    val uriHandler = LocalUriHandler.current
-    val label = when (link.type) {
-        SocialLinkType.EMAIL -> "Email"
-        SocialLinkType.GITHUB -> "GitHub"
-        SocialLinkType.LINKEDIN -> "LinkedIn"
-        SocialLinkType.WEBSITE -> "Web"
-        SocialLinkType.TWITTER -> "Twitter"
+    val (iconRes, label) = when (link.type) {
+        SocialLinkType.GITHUB -> Res.drawable.github to "GitHub"
+        SocialLinkType.LINKEDIN -> Res.drawable.linkedin to "LinkedIn"
+        SocialLinkType.EMAIL -> Res.drawable.email to "Email"
+        SocialLinkType.TWITTER -> Res.drawable.github to "Twitter"
+        SocialLinkType.WEBSITE -> Res.drawable.github to "Web"
     }
 
-    FilledTonalButton(
-        onClick = { uriHandler.openUri(link.url) },
+    LinkButton(
+        icon = painterResource(iconRes),
+        label = label,
+        url = link.url,
         modifier = modifier
-    ) {
-        Text(label)
-    }
+    )
 }
 
 @Composable
