@@ -1,7 +1,7 @@
 {
   "profile": {
     "name": "Ertuğrul AKKAYA",
-    "title": "Mobile Developer | Kotlin, Jetpack Compose & KMP Expert",
+    "title": "Mobile Developer | Kotlin, Jetpack Compose & KMP",
     "bio": "Results-driven Mobile Developer specializing in Kotlin, Jetpack Compose, and Kotlin Multiplatform (KMP) for scalable Android and iOS applications. Backed by solid backend capabilities in ASP.NET Core and PostgreSQL to deliver seamless end-to-end integrations. Passionate about clean architecture, agile teamwork, and building maintainable products from scratch.",
     "email": "ertuakkaya@gmail.com",
     "phone": "+90 554 742 45 93",
@@ -14,7 +14,7 @@
     ]
   },
   "experiences": [
-    { "id": "1", "company": "Termtech, Düzce Teknopark", "position": "Mobile Developer", "startDate": "2024-08", "endDate": "2026-01", "isCurrent": true, "description": "Field-Task App: Engineered an Android/iOS KMP app with Jetpack Compose, featuring real-time geolocation, QR-triggered execution, and rich-media capture for on-site reporting. IoT Integration: Developed an MQTT-based telemetry tracking solution with robust device provisioning and direct mobile Wi-Fi configuration. Architecture: Architected scalable codebases using Clean Architecture, MVVM, and Compose Multiplatform to maximize UI code-sharing and native performance. Full-Stack Support: Integrated ASP.NET Core & PostgreSQL APIs, optimizing payloads and implementing push notifications for instant updates.", "location": "Düzce, Turkey" },
+    { "id": "1", "company": "Termtech, Düzce Teknopark", "position": "Mobile Developer", "startDate": "2024-08", "endDate": "2026-01", "isCurrent": false, "description": "Field-Task App: Engineered an Android/iOS KMP app with Jetpack Compose, featuring real-time geolocation, QR-triggered execution, and rich-media capture for on-site reporting. IoT Integration: Developed an MQTT-based telemetry tracking solution with robust device provisioning and direct mobile Wi-Fi configuration. Architecture: Architected scalable codebases using Clean Architecture, MVVM, and Compose Multiplatform to maximize UI code-sharing and native performance. Full-Stack Support: Integrated ASP.NET Core & PostgreSQL APIs, optimizing payloads and implementing push notifications for instant updates.", "location": "Düzce, Turkey" },
     { "id": "2", "company": "Termtech, Düzce Teknopark", "position": "Mobile Application Developer Intern", "startDate": "2024-07", "endDate": "2024-08", "isCurrent": false, "description": "Supported native Android development, RESTful API integrations, and actively participated in agile debugging phases.", "location": "Düzce, Turkey" }
   ],
   "education": [
