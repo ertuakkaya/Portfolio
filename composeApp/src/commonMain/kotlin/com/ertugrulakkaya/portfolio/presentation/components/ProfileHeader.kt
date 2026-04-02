@@ -70,14 +70,6 @@ fun ProfileHeader(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            profile.phone?.let { phone ->
-                Text(
-                    text = phone,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-
             Text(
                 text = profile.email,
                 style = MaterialTheme.typography.bodyLarge,
