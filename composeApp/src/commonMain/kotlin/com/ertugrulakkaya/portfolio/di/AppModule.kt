@@ -5,6 +5,9 @@ import com.ertugrulakkaya.portfolio.data.repository.ThemeRepositoryImpl
 import com.ertugrulakkaya.portfolio.data.source.PortfolioJsonSource
 import com.ertugrulakkaya.portfolio.domain.repository.PortfolioRepository
 import com.ertugrulakkaya.portfolio.domain.repository.ThemeRepository
+import com.ertugrulakkaya.portfolio.domain.usecase.GetPortfolioDataUseCase
+import com.ertugrulakkaya.portfolio.domain.usecase.GetThemeStateUseCase
+import com.ertugrulakkaya.portfolio.domain.usecase.ToggleThemeUseCase
 import com.ertugrulakkaya.portfolio.presentation.viewmodel.PortfolioViewModel
 import com.ertugrulakkaya.portfolio.presentation.viewmodel.ThemeViewModel
 import com.russhwolf.settings.Settings
@@ -16,6 +19,9 @@ val appModule = module {
     single<ThemeRepository> { ThemeRepositoryImpl(get()) }
     single<PortfolioRepository> { PortfolioRepositoryImpl(get()) }
     single { PortfolioJsonSource() }
-    viewModel { ThemeViewModel(get()) }
+    single { GetPortfolioDataUseCase(get()) }
+    single { GetThemeStateUseCase(get()) }
+    single { ToggleThemeUseCase(get()) }
+    viewModel { ThemeViewModel(get(), get()) }
     viewModel { PortfolioViewModel(get()) }
 }

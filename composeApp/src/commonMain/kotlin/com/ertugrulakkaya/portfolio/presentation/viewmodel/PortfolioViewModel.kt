@@ -3,7 +3,7 @@ package com.ertugrulakkaya.portfolio.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ertugrulakkaya.portfolio.domain.model.PortfolioData
-import com.ertugrulakkaya.portfolio.domain.repository.PortfolioRepository
+import com.ertugrulakkaya.portfolio.domain.usecase.GetPortfolioDataUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +17,7 @@ data class PortfolioUiState(
 )
 
 class PortfolioViewModel(
-    private val portfolioRepository: PortfolioRepository
+    private val getPortfolioDataUseCase: GetPortfolioDataUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PortfolioUiState())
@@ -30,7 +30,7 @@ class PortfolioViewModel(
     fun loadPortfolioData() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            portfolioRepository.getPortfolioData()
+            getPortfolioDataUseCase()
                 .onSuccess { data ->
                     _uiState.update { it.copy(isLoading = false, data = data, error = null) }
                 }

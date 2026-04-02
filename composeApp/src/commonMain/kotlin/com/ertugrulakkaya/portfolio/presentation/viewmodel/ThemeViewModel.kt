@@ -1,18 +1,18 @@
 package com.ertugrulakkaya.portfolio.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.ertugrulakkaya.portfolio.domain.repository.ThemeRepository
+import com.ertugrulakkaya.portfolio.domain.usecase.GetThemeStateUseCase
+import com.ertugrulakkaya.portfolio.domain.usecase.ToggleThemeUseCase
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class ThemeViewModel(
-    private val themeRepository: ThemeRepository
+    getThemeStateUseCase: GetThemeStateUseCase,
+    private val toggleThemeUseCase: ToggleThemeUseCase
 ) : ViewModel() {
 
-    val isDarkTheme: StateFlow<Boolean> = themeRepository.isDarkTheme
+    val isDarkTheme: StateFlow<Boolean> = getThemeStateUseCase()
 
     fun toggleTheme() {
-        themeRepository.toggleTheme()
+        toggleThemeUseCase()
     }
 }
