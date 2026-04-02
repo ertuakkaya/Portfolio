@@ -9,9 +9,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.Code
 import androidx.compose.material3.*
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -48,13 +56,25 @@ private fun ProjectCard(
     modifier: Modifier = Modifier
 ) {
     val uriHandler = LocalUriHandler.current
+    val interactionSource = remember { MutableInteractionSource() }
+    val isHovered by interactionSource.collectIsHoveredAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (isHovered) 1.02f else 1f,
+        animationSpec = tween(durationMillis = 200),
+        label = "card_scale"
+    )
 
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .hoverable(interactionSource)
+            .graphicsLayer(scaleX = scale, scaleY = scale),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = if (isHovered) 6.dp else 3.dp
+        ),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
         shape = RoundedCornerShape(24.dp)
     ) {

@@ -19,14 +19,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 import com.ertugrulakkaya.portfolio.domain.model.PortfolioData
 import com.ertugrulakkaya.portfolio.presentation.components.ErrorState
 import com.ertugrulakkaya.portfolio.presentation.components.LoadingState
@@ -143,52 +150,101 @@ private fun SectionCard(
 }
 
 @Composable
+private fun AnimatedSectionCard(
+    visible: Boolean,
+    delayMillis: Int = 0,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    var startAnimation by remember { mutableStateOf(false) }
+
+    LaunchedEffect(visible) {
+        if (visible) {
+            if (delayMillis > 0) {
+                delay(delayMillis.toLong())
+            }
+            startAnimation = true
+        } else {
+            startAnimation = false
+        }
+    }
+
+    val alpha by animateFloatAsState(
+        targetValue = if (startAnimation) 1f else 0f,
+        animationSpec = tween(durationMillis = 600),
+        label = "section_alpha"
+    )
+
+    val offsetY by animateFloatAsState(
+        targetValue = if (startAnimation) 0f else 50f,
+        animationSpec = tween(durationMillis = 600),
+        label = "section_offset"
+    )
+
+    SectionCard(
+        modifier = modifier
+            .graphicsLayer(alpha = alpha, translationY = offsetY)
+    ) {
+        content()
+    }
+}
+
+@Composable
 private fun PortfolioContent(
     data: PortfolioData,
     isDarkTheme: Boolean,
     onToggleTheme: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val scrollState = rememberScrollState()
+    var sectionsVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        sectionsVisible = true
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(scrollState),
     ) {
         Spacer(modifier = Modifier.height(24.dp))
 
-        ProfileHeader(
-            profile = data.profile,
-            isDarkTheme = isDarkTheme,
-            onToggleTheme = onToggleTheme
-        )
+        AnimatedSectionCard(visible = sectionsVisible, delayMillis = 0) {
+            ProfileHeader(
+                profile = data.profile,
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = onToggleTheme
+            )
+        }
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        SectionCard {
+        AnimatedSectionCard(visible = sectionsVisible, delayMillis = 100) {
             ProjectsSection(projects = data.projects)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        SectionCard {
+        AnimatedSectionCard(visible = sectionsVisible, delayMillis = 200) {
             ExperienceSection(experiences = data.experiences)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        SectionCard {
+        AnimatedSectionCard(visible = sectionsVisible, delayMillis = 300) {
             EducationSection(education = data.education)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        SectionCard {
+        AnimatedSectionCard(visible = sectionsVisible, delayMillis = 400) {
             LeadershipSection(leadership = data.leadership)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        SectionCard {
+        AnimatedSectionCard(visible = sectionsVisible, delayMillis = 500) {
             SkillsSection(skills = data.skills)
         }
 
