@@ -1,10 +1,11 @@
 package com.ertugrulakkaya.portfolio.data.source
 
 import com.ertugrulakkaya.portfolio.domain.model.PortfolioData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import portfolio.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.readBytes
 
 class PortfolioJsonSource {
     private val json = Json {
@@ -13,8 +14,8 @@ class PortfolioJsonSource {
     }
 
     @OptIn(ExperimentalResourceApi::class)
-    suspend fun loadPortfolioData(): PortfolioData = withContext(kotlinx.coroutines.Dispatchers.Default) {
-        val jsonString = readBytes("files/portfolio.json").decodeToString()
+    suspend fun loadPortfolioData(): PortfolioData = withContext(Dispatchers.Default) {
+        val jsonString = Res.readBytes("files/portfolio.json").decodeToString()
         json.decodeFromString<PortfolioData>(jsonString)
     }
 }
