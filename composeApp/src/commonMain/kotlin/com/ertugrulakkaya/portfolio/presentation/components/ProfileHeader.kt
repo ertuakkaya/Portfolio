@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -21,11 +20,7 @@ import coil3.compose.AsyncImage
 import com.ertugrulakkaya.portfolio.domain.model.Profile
 import com.ertugrulakkaya.portfolio.domain.model.SocialLink
 import com.ertugrulakkaya.portfolio.domain.model.SocialLinkType
-import com.ertugrulakkaya.portfolio.presentation.viewmodel.ThemeViewModel
 import org.jetbrains.compose.resources.painterResource
-import org.koin.compose.koinInject
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.email
 import portfolio.composeapp.generated.resources.github
@@ -34,11 +29,10 @@ import portfolio.composeapp.generated.resources.linkedin
 @Composable
 fun ProfileHeader(
     profile: Profile,
+    isDarkTheme: Boolean,
+    onToggleTheme: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val themeViewModel: ThemeViewModel = koinInject()
-    val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
-
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -107,7 +101,7 @@ fun ProfileHeader(
 
         ThemeToggleButton(
             isDarkTheme = isDarkTheme,
-            onToggle = { themeViewModel.toggleTheme() },
+            onToggle = onToggleTheme,
             modifier = Modifier.padding(top = 8.dp)
         )
     }

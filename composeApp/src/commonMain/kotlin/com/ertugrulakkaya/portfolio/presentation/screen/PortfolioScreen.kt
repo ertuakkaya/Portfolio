@@ -2,7 +2,6 @@ package com.ertugrulakkaya.portfolio.presentation.screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -18,7 +16,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -29,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-
 import androidx.compose.ui.unit.dp
 import com.ertugrulakkaya.portfolio.domain.model.PortfolioData
 import com.ertugrulakkaya.portfolio.presentation.components.ErrorState
@@ -41,24 +37,25 @@ import com.ertugrulakkaya.portfolio.presentation.components.EducationSection
 import com.ertugrulakkaya.portfolio.presentation.components.ExperienceSection
 import com.ertugrulakkaya.portfolio.presentation.components.LeadershipSection
 import com.ertugrulakkaya.portfolio.presentation.viewmodel.PortfolioViewModel
-
+import com.ertugrulakkaya.portfolio.presentation.viewmodel.ThemeViewModel
 import org.koin.compose.koinInject
 
 @Composable
 fun PortfolioScreen(
-    viewModel: PortfolioViewModel = koinInject()
+    viewModel: PortfolioViewModel = koinInject(),
+    themeViewModel: ThemeViewModel = koinInject()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isLoading = uiState.isLoading
     val error = uiState.error
     val data = uiState.data
-    val isDark = isSystemInDarkTheme()
+    val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
     val bgColor = MaterialTheme.colorScheme.background
     val surfaceVariantColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
     val primaryContainerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.15f)
 
-    val backgroundBrush = remember(isDark, bgColor, surfaceVariantColor, primaryContainerColor) {
-        if (isDark) {
+    val backgroundBrush = remember(isDarkTheme, bgColor, surfaceVariantColor, primaryContainerColor) {
+        if (isDarkTheme) {
             Brush.verticalGradient(
                 colors = listOf(
                     bgColor,
@@ -83,7 +80,11 @@ fun PortfolioScreen(
             .background(backgroundBrush)
     ) {
         if (data != null) {
-            PortfolioContent(data = data)
+            PortfolioContent(
+                data = data,
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = { themeViewModel.toggleTheme() }
+            )
         }
 
         if (isLoading) {
@@ -144,6 +145,8 @@ private fun SectionCard(
 @Composable
 private fun PortfolioContent(
     data: PortfolioData,
+    isDarkTheme: Boolean,
+    onToggleTheme: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -154,7 +157,9 @@ private fun PortfolioContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         ProfileHeader(
-            profile = data.profile
+            profile = data.profile,
+            isDarkTheme = isDarkTheme,
+            onToggleTheme = onToggleTheme
         )
 
         Spacer(modifier = Modifier.height(48.dp))
