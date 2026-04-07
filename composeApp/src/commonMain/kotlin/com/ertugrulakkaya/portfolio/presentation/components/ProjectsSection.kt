@@ -177,7 +177,8 @@ private fun ProjectCard(
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+//            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.weight(1f))
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
