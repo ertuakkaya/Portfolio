@@ -1,9 +1,18 @@
 package com.ertugrulakkaya.portfolio.presentation.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
@@ -36,15 +45,37 @@ fun ProjectsSection(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            contentPadding = PaddingValues(horizontal = 4.dp)
-        ) {
-            items(projects) { project ->
-                ProjectCard(
-                    project = project,
-                    modifier = Modifier.width(340.dp)
-                )
+        BoxWithConstraints {
+            val maxWidth = maxWidth
+            val columns = when {
+                maxWidth >= 1000.dp -> 3
+                maxWidth >= 650.dp -> 2
+                else -> 1
+            }
+            val chunkSize = columns
+            val chunks = projects.chunked(chunkSize)
+
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                chunks.forEach { chunk ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        chunk.forEach { project ->
+                            ProjectCard(
+                                project = project,
+                                modifier = Modifier
+                                    .height(375.dp)
+                                    .weight(1f)
+                            )
+                        }
+                        if (chunk.size < columns) {
+                            repeat(columns - chunk.size) {
+                                Spacer(modifier = Modifier.weight(1f))
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -122,7 +153,6 @@ private fun ProjectCard(
                 text = project.description,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
 
