@@ -1,5 +1,6 @@
 package com.ertugrulakkaya.portfolio.presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -22,6 +23,7 @@ import com.ertugrulakkaya.portfolio.domain.model.SocialLink
 import com.ertugrulakkaya.portfolio.domain.model.SocialLinkType
 import org.jetbrains.compose.resources.painterResource
 import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.profile
 import portfolio.composeapp.generated.resources.email
 import portfolio.composeapp.generated.resources.github
 import portfolio.composeapp.generated.resources.linkedin
@@ -110,29 +112,15 @@ private fun ProfileAvatar(
         .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary)
         .clip(CircleShape)
 
-    if (avatarUrl != null) {
-        AsyncImage(
-            model = avatarUrl,
+    Box(
+        modifier = avatarModifier,
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(Res.drawable.profile),
             contentDescription = "Profile picture of $name",
-            modifier = avatarModifier,
             contentScale = ContentScale.Crop
         )
-    } else {
-        Surface(
-            modifier = avatarModifier,
-            shape = CircleShape,
-            color = MaterialTheme.colorScheme.primaryContainer
-        ) {
-            Box(
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = name.take(2).uppercase(),
-                    style = MaterialTheme.typography.displayMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            }
-        }
     }
 }
 
