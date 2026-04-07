@@ -73,12 +73,12 @@ private fun LeadershipCard(
                     )
                 }
 
-                Icon(
-                    imageVector = Icons.Outlined.People,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp),
-                    tint = MaterialTheme.colorScheme.primary
-                )
+//                Icon(
+//                    imageVector = Icons.Outlined.People,
+//                    contentDescription = null,
+//                    modifier = Modifier.size(24.dp),
+//                    tint = MaterialTheme.colorScheme.primary
+//                )
             }
 
             Spacer(modifier = Modifier.height(4.dp))

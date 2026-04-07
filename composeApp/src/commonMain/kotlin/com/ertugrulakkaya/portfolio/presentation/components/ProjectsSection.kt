@@ -136,14 +136,14 @@ private fun ProjectCard(
                             shape = RoundedCornerShape(12.dp)
                         )
                     }
-                    if (project.isFeatured) {
-                        SuggestionChip(
-                            onClick = { },
-                            label = { Text("Featured", style = MaterialTheme.typography.labelMedium) },
-                            modifier = Modifier.height(28.dp),
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                    }
+//                    if (project.isFeatured) {
+//                        SuggestionChip(
+//                            onClick = { },
+//                            label = { Text("Featured", style = MaterialTheme.typography.labelMedium) },
+//                            modifier = Modifier.height(28.dp),
+//                            shape = RoundedCornerShape(12.dp)
+//                        )
+//                    }
                 }
             }
 
