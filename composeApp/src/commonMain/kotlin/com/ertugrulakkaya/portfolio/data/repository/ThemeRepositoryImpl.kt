@@ -10,7 +10,7 @@ class ThemeRepositoryImpl(
     private val settings: Settings
 ) : ThemeRepository {
 
-    private val _isDarkTheme = MutableStateFlow(settings.getBoolean(IS_DARK_THEME_KEY, false))
+    private val _isDarkTheme = MutableStateFlow(settings.getBoolean(IS_DARK_THEME_KEY, true))
     override val isDarkTheme: StateFlow<Boolean> = _isDarkTheme.asStateFlow()
 
     override fun toggleTheme() {

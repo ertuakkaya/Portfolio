@@ -93,11 +93,11 @@ fun ProfileHeader(
             SocialLinksRow(socialLinks = profile.socialLinks)
         }
 
-        ThemeToggleButton(
-            isDarkTheme = isDarkTheme,
-            onToggle = onToggleTheme,
-            modifier = Modifier.padding(top = 8.dp)
-        )
+//        ThemeToggleButton(
+//            isDarkTheme = isDarkTheme,
+//            onToggle = onToggleTheme,
+//            modifier = Modifier.padding(top = 8.dp)
+//        )
     }
 }
 
