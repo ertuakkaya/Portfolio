@@ -65,7 +65,10 @@ fun ProjectsSection(
                             ProjectCard(
                                 project = project,
                                 modifier = Modifier
-                                    .height(375.dp)
+                                    .then(
+                                        if (columns == 1) Modifier.fillMaxWidth()
+                                        else Modifier.height(375.dp)
+                                    )
                                     .weight(1f)
                             )
                         }
