@@ -39,6 +39,8 @@ kotlin {
             implementation(libs.coil3.network.ktor3)
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.fastscroller.core)
+            implementation(libs.fastscroller.indicator)
 
         }
         commonTest.dependencies {

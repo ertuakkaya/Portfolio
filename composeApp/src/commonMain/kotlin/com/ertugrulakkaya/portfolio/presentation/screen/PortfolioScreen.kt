@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,6 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -34,6 +37,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import io.github.oikvpqya.compose.fastscroller.VerticalScrollbar
+import io.github.oikvpqya.compose.fastscroller.ScrollbarStyle
+import io.github.oikvpqya.compose.fastscroller.ThumbStyle
+import io.github.oikvpqya.compose.fastscroller.TrackStyle
+import io.github.oikvpqya.compose.fastscroller.rememberScrollbarAdapter
 import kotlinx.coroutines.delay
 import com.ertugrulakkaya.portfolio.domain.model.PortfolioData
 import com.ertugrulakkaya.portfolio.presentation.components.ErrorState
@@ -82,7 +93,25 @@ fun PortfolioScreen(
         }
     }
 
-    Box(
+    val scrollState = rememberScrollState()
+    var isScrolling by remember { mutableStateOf(false) }
+
+    LaunchedEffect(scrollState.isScrollInProgress) {
+        if (scrollState.isScrollInProgress) {
+            isScrolling = true
+        } else {
+            delay(1000)
+            isScrolling = false
+        }
+    }
+
+    val scrollbarAlpha by animateFloatAsState(
+        targetValue = if (isScrolling && scrollState.maxValue > 0) 1f else 0f,
+        animationSpec = tween(durationMillis = 300),
+        label = "scrollbar_alpha"
+    )
+
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundBrush)
@@ -91,7 +120,8 @@ fun PortfolioScreen(
             PortfolioContent(
                 data = data,
                 isDarkTheme = isDarkTheme,
-                onToggleTheme = { themeViewModel.toggleTheme() }
+                onToggleTheme = { themeViewModel.toggleTheme() },
+                scrollState = scrollState
             )
         }
 
@@ -124,6 +154,32 @@ fun PortfolioScreen(
                     Text(error)
                 }
             }
+        }
+
+        if (scrollState.maxValue > 0) {
+            VerticalScrollbar(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .align(Alignment.TopEnd)
+                    .graphicsLayer(alpha = scrollbarAlpha),
+                adapter = rememberScrollbarAdapter(scrollState = scrollState),
+                enablePressToScroll = true,
+                style = ScrollbarStyle(
+                    minimalHeight = 16.dp,
+                    thickness = 8.dp,
+                    hoverDurationMillis = 300,
+                    thumbStyle = ThumbStyle(
+                        shape = RoundedCornerShape(4.dp),
+                        unhoverColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                        hoverColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    trackStyle = TrackStyle(
+                        shape = RoundedCornerShape(4.dp),
+                        unhoverColor = Color.Transparent,
+                        hoverColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
+                    ),
+                ),
+            )
         }
     }
 }
@@ -203,9 +259,9 @@ private fun PortfolioContent(
     data: PortfolioData,
     isDarkTheme: Boolean,
     onToggleTheme: () -> Unit,
+    scrollState: ScrollState,
     modifier: Modifier = Modifier
 ) {
-    val scrollState = rememberScrollState()
     var sectionsVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
