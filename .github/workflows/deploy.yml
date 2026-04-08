@@ -1,0 +1,20 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish KMP Web App
+        uses: openMF/mifos-x-actionhub-web-publish-kmp@v1.0.1
+        with:
+          web_package_name: 'composeApp'
+          java-version: '21'
