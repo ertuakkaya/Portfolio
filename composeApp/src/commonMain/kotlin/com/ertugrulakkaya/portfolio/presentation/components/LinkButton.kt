@@ -34,7 +34,8 @@ fun LinkButton(
     icon: Painter,
     label: String,
     url: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    compact: Boolean = false
 ) {
     val uriHandler = LocalUriHandler.current
 
@@ -46,7 +47,7 @@ fun LinkButton(
             contentColor = MaterialTheme.colorScheme.primary
         ),
         shape = RoundedCornerShape(12.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        contentPadding = if (compact) PaddingValues(horizontal = 10.dp, vertical = 6.dp) else PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
     ) {
         Row(
@@ -55,12 +56,12 @@ fun LinkButton(
             Icon(
                 painter = icon,
                 contentDescription = null,
-                modifier = Modifier.size(18.dp)
+                modifier = Modifier.size(if (compact) 14.dp else 18.dp)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(if (compact) 4.dp else 8.dp))
             Text(
                 text = label,
-                style = MaterialTheme.typography.labelLarge
+                style = if (compact) MaterialTheme.typography.labelMedium else MaterialTheme.typography.labelLarge
             )
         }
     }

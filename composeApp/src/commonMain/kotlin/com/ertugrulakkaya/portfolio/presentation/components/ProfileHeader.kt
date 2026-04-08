@@ -35,6 +35,32 @@ fun ProfileHeader(
     onToggleTheme: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    BoxWithConstraints(modifier = modifier) {
+        val isCompact = maxWidth < 600.dp
+
+        if (isCompact) {
+            ProfileHeaderCompact(
+                profile = profile,
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = onToggleTheme
+            )
+        } else {
+            ProfileHeaderExpanded(
+                profile = profile,
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = onToggleTheme
+            )
+        }
+    }
+}
+
+@Composable
+private fun ProfileHeaderExpanded(
+    profile: Profile,
+    isDarkTheme: Boolean,
+    onToggleTheme: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -44,7 +70,8 @@ fun ProfileHeader(
     ) {
         ProfileAvatar(
             name = profile.name,
-            avatarUrl = profile.avatarUrl
+            avatarUrl = profile.avatarUrl,
+            modifier = Modifier.size(200.dp)
         )
 
         Column(
@@ -92,12 +119,86 @@ fun ProfileHeader(
 
             SocialLinksRow(socialLinks = profile.socialLinks)
         }
+    }
+}
 
-//        ThemeToggleButton(
-//            isDarkTheme = isDarkTheme,
-//            onToggle = onToggleTheme,
-//            modifier = Modifier.padding(top = 8.dp)
-//        )
+@Composable
+private fun ProfileHeaderCompact(
+    profile: Profile,
+    isDarkTheme: Boolean,
+    onToggleTheme: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        ProfileAvatar(
+            name = profile.name,
+            avatarUrl = profile.avatarUrl,
+            modifier = Modifier.size(140.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = profile.name,
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.ExtraBold,
+            color = MaterialTheme.colorScheme.onSurface,
+            textAlign = TextAlign.Center
+        )
+
+        Text(
+            text = profile.title,
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Medium
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = profile.location,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
+            )
+
+            Text(
+                text = profile.email,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = profile.bio,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+            maxLines = 3,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        SocialLinksRow(
+            socialLinks = profile.socialLinks,
+            modifier = Modifier.fillMaxWidth(),
+            centered = true,
+            compact = true
+        )
     }
 }
 
@@ -108,7 +209,6 @@ private fun ProfileAvatar(
     modifier: Modifier = Modifier
 ) {
     val avatarModifier = modifier
-        .size(200.dp)
         .shadow(elevation = 12.dp, shape = CircleShape, spotColor = MaterialTheme.colorScheme.primary)
         .clip(CircleShape)
 
@@ -127,14 +227,20 @@ private fun ProfileAvatar(
 @Composable
 private fun SocialLinksRow(
     socialLinks: List<SocialLink>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    centered: Boolean = false,
+    compact: Boolean = false
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = if (centered) Arrangement.Center else Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        socialLinks.forEach { link ->
-            SocialLinkButton(link = link)
+        socialLinks.forEachIndexed { index, link ->
+            if (index > 0) {
+                Spacer(modifier = Modifier.width(12.dp))
+            }
+            SocialLinkButton(link = link, compact = compact)
         }
     }
 }
@@ -142,7 +248,8 @@ private fun SocialLinksRow(
 @Composable
 private fun SocialLinkButton(
     link: SocialLink,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    compact: Boolean = false
 ) {
     val (iconRes, label) = when (link.type) {
         SocialLinkType.GITHUB -> Res.drawable.github to "GitHub"
@@ -156,9 +263,12 @@ private fun SocialLinkButton(
         icon = painterResource(iconRes),
         label = label,
         url = link.url,
-        modifier = modifier
+        modifier = modifier,
+        compact = compact
     )
 }
+
+
 
 @Composable
 private fun ThemeToggleButton(
