@@ -3,6 +3,7 @@ package com.ertugrulakkaya.portfolio.presentation.screen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -132,19 +133,27 @@ private fun SectionCard(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 32.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
-        shape = RoundedCornerShape(24.dp)
-    ) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            content()
+    BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
+        val horizontalPadding = when {
+            maxWidth < 600.dp -> 16.dp
+            maxWidth < 840.dp -> 24.dp
+            else -> 32.dp
+        }
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = horizontalPadding),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
+            shape = RoundedCornerShape(24.dp)
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                content()
+            }
         }
     }
 }
