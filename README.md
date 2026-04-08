@@ -6,6 +6,8 @@ A modern Kotlin Multiplatform portfolio application showcasing mobile developmen
 
 This project demonstrates cross-platform mobile development using Kotlin, Jetpack Compose, and Compose Multiplatform. It targets Web (Wasm/JS) and Android platforms from a single codebase.
 
+<img src="screenshots/screenshots.png" width="600" alt="Portfolio Preview"/>
+
 ## Tech Stack
 
 | Category | Technology |
