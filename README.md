@@ -1,42 +1,81 @@
-This is a Kotlin Multiplatform project targeting Web.
+# Portfolio
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+A modern Kotlin Multiplatform portfolio application showcasing mobile development expertise.
 
-### Build and Run Web Application
+## Overview
 
-To build and run the development version of the web app, use the run configuration from the run widget
-in your IDE's toolbar or run it directly from the terminal:
-- for the Wasm target (faster, modern browsers):
-  - on macOS/Linux
-    ```shell
-    ./gradlew :composeApp:wasmJsBrowserDevelopmentRun
-    ```
-  - on Windows
-    ```shell
-    .\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
-    ```
-- for the JS target (slower, supports older browsers):
-  - on macOS/Linux
-    ```shell
-    ./gradlew :composeApp:jsBrowserDevelopmentRun
-    ```
-  - on Windows
-    ```shell
-    .\gradlew.bat :composeApp:jsBrowserDevelopmentRun
-    ```
+This project demonstrates cross-platform mobile development using Kotlin, Jetpack Compose, and Compose Multiplatform. It targets Web (Wasm/JS) and Android platforms from a single codebase.
+
+## Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| **Language** | Kotlin 2.3.10 |
+| **UI Framework** | Compose Multiplatform 1.10.0 |
+| **Design System** | Material 3 |
+| **Architecture** | Clean Architecture + MVVM |
+| **Dependency Injection** | Koin 4.0.0 |
+| **Image Loading** | Coil3 3.4.0 |
+| **State Management** | Kotlin Flow + ViewModel |
+| **Data Storage** | Multiplatform Settings |
+| **Serialization** | Kotlinx Serialization |
+
+## Project Structure
+
+```
+composeApp/src/
+├── commonMain/kotlin/
+│   └── com/ertugrulakkaya/portfolio/
+│       ├── di/              # Dependency injection
+│       ├── domain/          # Business logic layer
+│       │   ├── model/       # Data models
+│       │   ├── repository/  # Repository interfaces
+│       │   └── usecase/     # Use cases
+│       ├── data/            # Data layer
+│       │   ├── repository/  # Repository implementations
+│       │   └── source/      # Data sources
+│       └── presentation/    # UI layer
+│           ├── screen/      # Screens
+│           ├── components/  # UI components
+│           ├── viewmodel/   # ViewModels
+│           └── theme/       # Theme configuration
+├── webMain/                 # Web platform
+└── androidMain/            # Android platform
+```
+
+## Features
+
+- **Dark/Light Theme** - System preference detection with manual toggle (persisted)
+- **Responsive Design** - Adaptive layouts for different screen sizes
+- **Smooth Animations** - Staggered fade-in effects on load
+- **Content-driven** - Portfolio data loaded from JSON
+
+## Build & Run
+
+### Web (Wasm)
+```bash
+./gradlew :composeApp:wasmJsBrowserDevelopmentRun
+```
+
+### Web (JS)
+```bash
+./gradlew :composeApp:jsBrowserDevelopmentRun
+```
+
+### Android
+Build using Android Studio or:
+```bash
+./gradlew :composeApp:compileDebugKotlinAndroid
+```
+
+## Architecture Highlights
+
+- **Clean Architecture** with three distinct layers
+- **Repository Pattern** for data abstraction
+- **Use Cases** for business logic encapsulation
+- **ViewModels** with Kotlin Flow for reactive state management
+- **Koin** for lightweight dependency injection
 
 ---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
-
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+Built with Kotlin Multiplatform
