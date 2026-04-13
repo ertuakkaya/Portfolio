@@ -25,7 +25,7 @@ fun App() {
         PortfolioTheme(darkTheme = isDarkTheme) {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.surface
+                color = MaterialTheme.colorScheme.background
             ) {
                 PortfolioScreen()
             }

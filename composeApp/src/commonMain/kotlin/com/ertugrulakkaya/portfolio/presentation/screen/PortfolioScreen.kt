@@ -21,8 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.runtime.Composable
@@ -39,7 +37,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import io.github.oikvpqya.compose.fastscroller.VerticalScrollbar
 import io.github.oikvpqya.compose.fastscroller.ScrollbarStyle
 import io.github.oikvpqya.compose.fastscroller.ThumbStyle
@@ -69,28 +66,12 @@ fun PortfolioScreen(
     val error = uiState.error
     val data = uiState.data
     val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
-    val bgColor = MaterialTheme.colorScheme.background
-    val surfaceVariantColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
-    val primaryContainerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.15f)
 
-    val backgroundBrush = remember(isDarkTheme, bgColor, surfaceVariantColor, primaryContainerColor) {
-        if (isDarkTheme) {
-            Brush.verticalGradient(
-                colors = listOf(
-                    bgColor,
-                    surfaceVariantColor,
-                    bgColor
-                )
-            )
-        } else {
-            Brush.verticalGradient(
-                colors = listOf(
-                    bgColor,
-                    primaryContainerColor,
-                    bgColor
-                )
-            )
-        }
+    val colorScheme = MaterialTheme.colorScheme
+    val backgroundBrush = remember(isDarkTheme) {
+        Brush.verticalGradient(
+            colors = listOf(colorScheme.background, colorScheme.surface, colorScheme.background)
+        )
     }
 
     val scrollState = rememberScrollState()
@@ -132,7 +113,9 @@ fun PortfolioScreen(
                 LinearProgressIndicator(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.TopCenter)
+                        .align(Alignment.TopCenter),
+                    color = MaterialTheme.colorScheme.primary,
+                    trackColor = MaterialTheme.colorScheme.outlineVariant
                 )
             }
         }
@@ -145,9 +128,11 @@ fun PortfolioScreen(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(16.dp),
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
                     action = {
                         TextButton(onClick = { viewModel.loadPortfolioData() }) {
-                            Text("Retry")
+                            Text("Retry", color = MaterialTheme.colorScheme.primary)
                         }
                     }
                 ) {
@@ -204,8 +189,8 @@ private fun SectionCard(
                 containerColor = MaterialTheme.colorScheme.surface
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
-            shape = RoundedCornerShape(24.dp)
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+            shape = RoundedCornerShape(12.dp)
         ) {
             Column(modifier = Modifier.padding(20.dp)) {
                 content()

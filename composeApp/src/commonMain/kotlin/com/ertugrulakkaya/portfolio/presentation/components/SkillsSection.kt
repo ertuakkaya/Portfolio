@@ -42,30 +42,28 @@ private fun SkillCategoryRow(
         Text(
             text = category.displayName,
             style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.primary
+            fontWeight = FontWeight(590),
+            color = MaterialTheme.colorScheme.secondary
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             skills.forEachIndexed { index, skill ->
                 Text(
                     text = "•",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 )
                 Text(
                     text = skill.name,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    fontWeight = FontWeight(400),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
-                if (index < skills.lastIndex) {
-                    Spacer(modifier = Modifier.width(4.dp))
-                }
             }
         }
     }

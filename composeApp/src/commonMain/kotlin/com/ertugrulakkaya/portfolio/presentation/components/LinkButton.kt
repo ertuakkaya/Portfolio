@@ -13,16 +13,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ertugrulakkaya.portfolio.presentation.theme.PortfolioTheme
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.material3.MaterialTheme
+import com.ertugrulakkaya.portfolio.presentation.theme.PortfolioTheme
 import org.jetbrains.compose.resources.painterResource
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.email
@@ -41,13 +42,21 @@ fun LinkButton(
 
     Button(
         onClick = { uriHandler.openUri(url) },
-        modifier = modifier.border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(12.dp)),
+        modifier = modifier.border(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outline,
+            shape = RoundedCornerShape(6.dp)
+        ),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary
+            contentColor = MaterialTheme.colorScheme.onSurface
         ),
-        shape = RoundedCornerShape(12.dp),
-        contentPadding = if (compact) PaddingValues(horizontal = 10.dp, vertical = 6.dp) else PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(6.dp),
+        contentPadding = if (compact) {
+            PaddingValues(horizontal = 10.dp, vertical = 6.dp)
+        } else {
+            PaddingValues(horizontal = 8.dp, vertical = 8.dp)
+        },
         elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
     ) {
         Row(
@@ -56,12 +65,22 @@ fun LinkButton(
             Icon(
                 painter = icon,
                 contentDescription = null,
-                modifier = Modifier.size(if (compact) 14.dp else 18.dp)
+                modifier = Modifier.size(if (compact) 14.dp else 18.dp),
+                tint = if (compact) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.width(if (compact) 4.dp else 8.dp))
             Text(
                 text = label,
-                style = if (compact) MaterialTheme.typography.labelMedium else MaterialTheme.typography.labelLarge
+                style = if (compact) {
+                    MaterialTheme.typography.labelMedium.copy(
+                        fontWeight = FontWeight(510)
+                    )
+                } else {
+                    MaterialTheme.typography.labelLarge.copy(
+                        fontWeight = FontWeight(510)
+                    )
+                },
+                color = if (compact) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface
             )
         }
     }
@@ -93,6 +112,19 @@ private fun LinkButtonDarkPreview() {
 
 @Preview
 @Composable
+private fun LinkButtonCompactPreview() {
+    PortfolioTheme(darkTheme = true) {
+        LinkButton(
+            icon = painterResource(Res.drawable.email),
+            label = "Email",
+            url = "mailto:test@example.com",
+            compact = true
+        )
+    }
+}
+
+@Preview
+@Composable
 private fun LinkButtonsPreview() {
     PortfolioTheme(darkTheme = false) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -112,6 +144,13 @@ private fun LinkButtonsPreview() {
                 icon = painterResource(Res.drawable.email),
                 label = "Email",
                 url = "mailto:test@example.com"
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            LinkButton(
+                icon = painterResource(Res.drawable.github),
+                label = "Compact",
+                url = "https://github.com",
+                compact = true
             )
         }
     }

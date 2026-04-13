@@ -1,6 +1,7 @@
 package com.ertugrulakkaya.portfolio.presentation.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,9 +11,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ertugrulakkaya.portfolio.domain.model.Experience
+import com.ertugrulakkaya.portfolio.presentation.theme.*
 
 @Composable
 fun ExperienceSection(
@@ -43,9 +46,9 @@ private fun TimelineItem(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
-        shape = RoundedCornerShape(16.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -59,29 +62,19 @@ private fun TimelineItem(
                     Text(
                         text = experience.position,
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeightStrong,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
                         text = experience.company,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Medium
+                        color = MaterialTheme.colorScheme.secondary,
+                        fontWeight = FontWeightEmphasis
                     )
                 }
 
                 if (experience.isCurrent) {
-                    SuggestionChip(
-                        onClick = { },
-                        label = { Text("Current", style = MaterialTheme.typography.labelSmall) },
-                        shape = CircleShape,
-                        colors = SuggestionChipDefaults.suggestionChipColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            labelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                        ),
-                        border = null,
-                        modifier = Modifier.height(24.dp)
-                    )
+                    CurrentBadge()
                 }
             }
 
@@ -90,7 +83,7 @@ private fun TimelineItem(
             Text(
                 text = formatDateRange(experience.startDate, experience.endDate, experience.isCurrent),
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
             )
 
             if (experience.location != null) {
@@ -102,13 +95,13 @@ private fun TimelineItem(
                         imageVector = Icons.Outlined.LocationOn,
                         contentDescription = null,
                         modifier = Modifier.size(14.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = experience.location,
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                     )
                 }
             }
@@ -123,18 +116,36 @@ private fun TimelineItem(
                     Text(
                         text = "•",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.padding(end = 8.dp)
                     )
                     Text(
                         text = point.trim().let { if (it.endsWith(".")) it else "$it." },
                         style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeightReading,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.2
                     )
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun CurrentBadge() {
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(9999.dp))
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(horizontal = 10.dp, vertical = 4.dp)
+    ) {
+        Text(
+            text = "Current",
+            style = MaterialTheme.typography.labelSmall,
+            fontWeight = FontWeightEmphasis,
+            color = MaterialTheme.colorScheme.onSurface
+        )
     }
 }
 

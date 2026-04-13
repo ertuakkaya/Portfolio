@@ -3,12 +3,16 @@ package com.ertugrulakkaya.portfolio.presentation.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ertugrulakkaya.portfolio.domain.model.Education
+import com.ertugrulakkaya.portfolio.presentation.theme.*
 
 @Composable
 fun EducationSection(
@@ -40,16 +44,17 @@ private fun EducationCard(
             containerColor = MaterialTheme.colorScheme.surface
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
-        shape = RoundedCornerShape(20.dp)
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier.padding(20.dp)
         ) {
             Text(
                 text = education.school,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
+                style = Typography.titleLarge.copy(
+                    fontWeight = FontWeightStrong
+                ),
                 color = MaterialTheme.colorScheme.onSurface
             )
 
@@ -57,16 +62,17 @@ private fun EducationCard(
 
             Text(
                 text = "${education.degree} in ${education.field}",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Medium
+                style = Typography.bodyLarge.copy(
+                    fontWeight = FontWeightEmphasis
+                ),
+                color = MaterialTheme.colorScheme.secondary
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = formatDateRange(education.startDate, education.endDate, education.isCurrent),
-                style = MaterialTheme.typography.bodySmall,
+                style = Typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
@@ -74,8 +80,10 @@ private fun EducationCard(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "GPA: $gpa",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary
+                    style = Typography.labelMedium.copy(
+                        fontWeight = FontWeightEmphasis
+                    ),
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
 
@@ -83,7 +91,7 @@ private fun EducationCard(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = education.description,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = Typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }

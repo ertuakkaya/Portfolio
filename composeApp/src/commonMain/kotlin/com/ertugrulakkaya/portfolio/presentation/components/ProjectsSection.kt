@@ -17,7 +17,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.Code
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.hoverable
@@ -28,11 +34,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.MaterialTheme
 import com.ertugrulakkaya.portfolio.domain.model.Project
 
 @Composable
@@ -104,13 +112,13 @@ private fun ProjectCard(
             .hoverable(interactionSource)
             .graphicsLayer(scaleX = scale, scaleY = scale),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = if (isHovered) 6.dp else 3.dp
+            defaultElevation = 0.dp
         ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
-        shape = RoundedCornerShape(24.dp)
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier.padding(24.dp)
@@ -123,7 +131,7 @@ private fun ProjectCard(
                 Text(
                     text = project.name,
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight(590),
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.weight(1f),
                     maxLines = 1,
@@ -132,21 +140,19 @@ private fun ProjectCard(
 
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (project.isKmpProject) {
-                        AssistChip(
-                            onClick = { },
-                            label = { Text("KMP", style = MaterialTheme.typography.labelMedium) },
-                            modifier = Modifier.height(28.dp),
-                            shape = RoundedCornerShape(12.dp)
-                        )
+                        Surface(
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = RoundedCornerShape(9999.dp)
+                        ) {
+                            Text(
+                                text = "KMP",
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight(510),
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                            )
+                        }
                     }
-//                    if (project.isFeatured) {
-//                        SuggestionChip(
-//                            onClick = { },
-//                            label = { Text("Featured", style = MaterialTheme.typography.labelMedium) },
-//                            modifier = Modifier.height(28.dp),
-//                            shape = RoundedCornerShape(12.dp)
-//                        )
-//                    }
                 }
             }
 
@@ -154,7 +160,8 @@ private fun ProjectCard(
 
             Text(
                 text = project.description,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight(400),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 overflow = TextOverflow.Ellipsis
             )
@@ -168,11 +175,13 @@ private fun ProjectCard(
                 project.technologies.forEach { tech ->
                     Surface(
                         color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = RoundedCornerShape(8.dp)
+                        shape = RoundedCornerShape(8.dp),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                     ) {
                         Text(
                             text = tech,
                             style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight(510),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
                         )
@@ -180,17 +189,20 @@ private fun ProjectCard(
                 }
             }
 
-//            Spacer(modifier = Modifier.height(24.dp))
             Spacer(modifier = Modifier.weight(1f))
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 if (project.demoUrl != null) {
-                    FilledTonalButton(
+                    Button(
                         onClick = { uriHandler.openUri(project.demoUrl) },
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(6.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        )
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.OpenInNew,
@@ -198,15 +210,24 @@ private fun ProjectCard(
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Demo", style = MaterialTheme.typography.labelLarge)
+                        Text(
+                            "Demo",
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight(510)
+                        )
                     }
                 }
 
                 if (project.sourceUrl != null) {
-                    OutlinedButton(
+                    Button(
                         onClick = { uriHandler.openUri(project.sourceUrl) },
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(6.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Transparent,
+                            contentColor = MaterialTheme.colorScheme.onSurface
+                        ),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Code,
@@ -214,7 +235,11 @@ private fun ProjectCard(
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Code", style = MaterialTheme.typography.labelLarge)
+                        Text(
+                            "Code",
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight(510)
+                        )
                     }
                 }
             }

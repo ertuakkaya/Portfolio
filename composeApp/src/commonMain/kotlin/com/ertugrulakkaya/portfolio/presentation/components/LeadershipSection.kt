@@ -2,18 +2,16 @@ package com.ertugrulakkaya.portfolio.presentation.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.People
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ertugrulakkaya.portfolio.domain.model.Leadership
+import com.ertugrulakkaya.portfolio.presentation.theme.FontWeightEmphasis
+import com.ertugrulakkaya.portfolio.presentation.theme.FontWeightReading
+import com.ertugrulakkaya.portfolio.presentation.theme.FontWeightStrong
 
 @Composable
 fun LeadershipSection(
@@ -46,9 +44,9 @@ private fun LeadershipCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.surfaceVariant),
-        shape = RoundedCornerShape(16.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -62,23 +60,16 @@ private fun LeadershipCard(
                     Text(
                         text = leadership.role,
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeightStrong,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
                         text = leadership.organization,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Medium
+                        color = MaterialTheme.colorScheme.secondary,
+                        fontWeight = FontWeightEmphasis
                     )
                 }
-
-//                Icon(
-//                    imageVector = Icons.Outlined.People,
-//                    contentDescription = null,
-//                    modifier = Modifier.size(24.dp),
-//                    tint = MaterialTheme.colorScheme.primary
-//                )
             }
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -94,6 +85,7 @@ private fun LeadershipCard(
             Text(
                 text = leadership.description,
                 style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeightReading,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.2
             )
@@ -109,12 +101,13 @@ private fun LeadershipCard(
                         Text(
                             text = "•",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.padding(end = 8.dp)
                         )
                         Text(
                             text = achievement,
                             style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeightReading,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             lineHeight = MaterialTheme.typography.bodyMedium.lineHeight * 1.2
                         )
