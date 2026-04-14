@@ -52,6 +52,8 @@ import com.ertugrulakkaya.portfolio.presentation.components.SkillsSection
 import com.ertugrulakkaya.portfolio.presentation.components.EducationSection
 import com.ertugrulakkaya.portfolio.presentation.components.ExperienceSection
 import com.ertugrulakkaya.portfolio.presentation.components.LeadershipSection
+import com.ertugrulakkaya.portfolio.presentation.components.SkillsSection
+import com.ertugrulakkaya.portfolio.presentation.components.EducationSection
 import com.ertugrulakkaya.portfolio.presentation.viewmodel.PortfolioViewModel
 import com.ertugrulakkaya.portfolio.presentation.viewmodel.ThemeViewModel
 import org.koin.compose.koinInject
@@ -186,7 +188,7 @@ private fun SectionCard(
                 .fillMaxWidth()
                 .padding(horizontal = horizontalPadding),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),

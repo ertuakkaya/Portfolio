@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.MaterialTheme
 import com.ertugrulakkaya.portfolio.domain.model.Project
 
+
 @Composable
 fun ProjectsSection(
     projects: List<Project>,
@@ -174,9 +175,9 @@ private fun ProjectCard(
             ) {
                 project.technologies.forEach { tech ->
                     Surface(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
+                        color = MaterialTheme.colorScheme.surface,
                         shape = RoundedCornerShape(8.dp),
-                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
                     ) {
                         Text(
                             text = tech,

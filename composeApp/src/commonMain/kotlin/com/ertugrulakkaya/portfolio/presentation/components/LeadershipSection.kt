@@ -42,7 +42,7 @@ private fun LeadershipCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),

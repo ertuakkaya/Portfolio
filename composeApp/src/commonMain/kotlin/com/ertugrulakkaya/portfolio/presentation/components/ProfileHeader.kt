@@ -249,7 +249,7 @@ private fun ProfileAvatar(
     Box(
         modifier = modifier
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(MaterialTheme.colorScheme.surface)
             .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape),
         contentAlignment = Alignment.Center
     ) {
@@ -361,7 +361,7 @@ private fun ThemeToggleButton(
         modifier = modifier
             .size(36.dp)
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(MaterialTheme.colorScheme.surface)
             .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
             .clickable(onClick = onToggle),
         contentAlignment = Alignment.Center
